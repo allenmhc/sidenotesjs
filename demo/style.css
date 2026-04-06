@@ -1,0 +1,134 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #222;
+  background: #fafafa;
+  margin: 0;
+  padding: 2rem 1rem;
+}
+
+/* Wide enough to fit text column + gap + sidenote column */
+.post {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* --- Sidenotes --- */
+
+/*
+ * Float-based layout: sidenotes are inserted before their pivot paragraph
+ * in DOM order, so float:right + clear:right naturally places each one in
+ * the right margin alongside its paragraph without overlap.
+ */
+.sidenote {
+  float: right;
+  clear: right;
+  width: 240px;
+  margin-left: 2rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.8em;
+  line-height: 1.5;
+  color: #555;
+  border-left: 2px solid #ccc;
+  padding-left: 0.75rem;
+}
+
+.sidenoteGroup {
+  float: right;
+  clear: right;
+  width: 240px;
+  margin-left: 2rem;
+  margin-bottom: 0.5rem;
+  border-left: 2px solid #ccc;
+  padding-left: 0.75rem;
+}
+
+/* Members inside a group stack vertically and share the group's border */
+.sidenoteGroup .sidenote {
+  float: none;
+  clear: none;
+  width: 100%;
+  margin-left: 0;
+  border-left: none;
+  padding-left: 0;
+  font-size: 0.8em;
+  line-height: 1.5;
+  color: #555;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.sidenoteGroup .sidenote:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+/* --- Footnotes (shown when sidenotes are hidden) --- */
+
+.footnotes {
+  clear: both;
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ccc;
+  font-size: 0.85em;
+  color: #444;
+}
+
+.footnotes ol {
+  padding-left: 1.5rem;
+}
+
+/* --- Demo controls --- */
+
+.controls {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.controls button {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.9rem;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.controls button:hover {
+  background: #f0f0f0;
+}
+
+sup a {
+  color: inherit;
+  font-size: 0.75em;
+  text-decoration: none;
+}
+
+sup a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive: hide sidenotes and show footnotes on narrow viewports */
+@media (max-width: 900px) {
+  .sidenote,
+  .sidenoteGroup {
+    display: none !important;
+  }
+
+  .footnotes {
+    display: block !important;
+  }
+}

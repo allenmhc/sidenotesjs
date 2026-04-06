@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sidenotes Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<article class="post">
+  <h1>Sidenotes Demo</h1>
+
+  <p>
+    The <em>sidenotes</em> plugin converts standard Markdown footnotes into
+    inline margin notes placed next to their reference in the text.<sup id="fnref:1"><a href="#fn:1">1</a></sup>
+    It requires no jQuery and works with any Markdown processor that outputs
+    the standard footnote HTML structure.
+  </p>
+
+  <p>
+    When two footnotes appear in the same paragraph they are automatically
+    grouped together.<sup id="fnref:2"><a href="#fn:2">2</a></sup>
+    This keeps the margin tidy and prevents overlap.<sup id="fnref:3"><a href="#fn:3">3</a></sup>
+    The group is treated as a single unit for placement purposes.
+  </p>
+
+  <p>
+    The plugin exposes a small API: <code>show()</code>, <code>hide()</code>,
+    <code>placement()</code>, and <code>destroy()</code>. Use the buttons below
+    to try them out.<sup id="fnref:4"><a href="#fn:4">4</a></sup>
+  </p>
+
+  <div class="footnotes">
+    <hr>
+    <ol>
+      <li id="fn:1">
+        Sidenotes are a typographic convention popularised by Edward Tufte.
+        They keep supplementary content visible without interrupting reading flow.
+        <a href="#fnref:1">&#8617;</a>
+      </li>
+      <li id="fn:2">
+        Grouping logic: two sidenotes share a group when their reference marks
+        are both direct children of the same block element (their common <em>pivot</em>).
+        <a href="#fnref:2">&#8617;</a>
+      </li>
+      <li id="fn:3">
+        The CSS for positioning is entirely your responsibility. The plugin only
+        manages DOM structure; the visual margin offset is achieved with
+        <code>position: absolute; left: 100%</code> on the sidenote element.
+        <a href="#fnref:3">&#8617;</a>
+      </li>
+      <li id="fn:4">
+        The full API: <code>new Sidenotes(element, options)</code>.
+        See the README for the complete options reference.
+        <a href="#fnref:4">&#8617;</a>
+      </li>
+    </ol>
+  </div>
+</article>
+
+<div class="controls">
+  <button id="btn-show">Show sidenotes</button>
+  <button id="btn-hide">Hide sidenotes</button>
+  <button id="btn-before">Placement: before</button>
+  <button id="btn-after">Placement: after</button>
+  <button id="btn-destroy">Destroy</button>
+  <button id="btn-reinit">Re-initialize</button>
+</div>
+
+<script type="module">
+  import Sidenotes from '../src/sidenotes.js';
+
+  let instance = new Sidenotes(document.querySelector('.post'));
+
+  document.getElementById('btn-show').onclick    = () => instance.show();
+  document.getElementById('btn-hide').onclick    = () => instance.hide();
+  document.getElementById('btn-before').onclick  = () => instance.placement('before');
+  document.getElementById('btn-after').onclick   = () => instance.placement('after');
+  document.getElementById('btn-destroy').onclick = () => instance.destroy();
+  document.getElementById('btn-reinit').onclick  = () => {
+    instance.destroy();
+    instance = new Sidenotes(document.querySelector('.post'));
+  };
+</script>
+
+</body>
+</html>

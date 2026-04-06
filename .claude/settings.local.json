@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(export PATH=\"/usr/local/bin:/opt/homebrew/bin:$PATH\")",
+      "Bash(npx vitest:*)",
+      "Bash(node build.js)",
+      "mcp__Claude_Preview__preview_start"
+    ]
+  }
+}
