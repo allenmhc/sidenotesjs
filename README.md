@@ -105,32 +105,38 @@ const sn = new Sidenotes(document.querySelector('.post'), {
 
 ## CSS
 
-The plugin only manages DOM structure — it does not apply any visual positioning. Add CSS to position sidenotes in the margin:
+The plugin only manages DOM structure — it does not apply any visual positioning. Sidenotes are inserted as siblings of their pivot element (e.g. `<p>`), so use CSS Grid to visually pair them side by side:
 
 ```css
 .post {
-  max-width: 620px;
-  position: relative;
+  display: grid;
+  grid-template-columns: 200px 1fr; /* sidenote column | text column */
+  column-gap: 1.5rem;
+  max-width: 820px;
 }
 
 .post p {
-  position: relative; /* gives sidenotes a positioning context */
+  grid-column: 2;
 }
 
-.sidenote {
-  position: absolute;
-  left: calc(100% + 2rem);
-  top: 0;
-  width: 220px;
+.post aside.sidenote,
+.post .sidenoteGroup {
+  grid-column: 1;
+  align-self: end; /* pins to the bottom of the shared row */
   font-size: 0.85em;
 }
 
 /* Hide sidenotes on narrow viewports */
 @media (max-width: 900px) {
+  .post {
+    display: block;
+  }
   .sidenote, .sidenoteGroup { display: none !important; }
   .footnotes { display: block !important; }
 }
 ```
+
+Grid auto-placement slots each `aside` and its following `p` into the same row because they are consecutive siblings occupying different columns. `align-self: end` on the aside pins it to the bottom of that row, aligning it with the base of the paragraph text.
 
 ---
 
